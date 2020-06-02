@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title></title>
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+
+<script
+	src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.9/angular.min.js"></script>
+
+<script src="/app.js"></script>
+<link rel="stylesheet" href="/app.css">
+
+</head>
+<body ng-app="SoccerApp">
+	<div ng-controller="SoccerCtrl as ctrl">
+		<button ng-click="ctrl.listTeams()">GetTeams</button>
+		<table class="table table-striped table-secondary">
+			<thead>
+				<tr>
+					<th>Name</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr ng-repeat="team in ctrl.teams">
+					<td>{{team.name}}</td>
+				</tr>
+				<tr>
+					<td>
+						<div class="input-group mb-3">
+							<input type="text" class="form-control" ng-model="ctrl.newTeam.name"
+								placeholder="Nombre Eqiopo">
+							<div class="input-group-append">
+								<button ng-click="ctrl.addTeam(ctrl.newTeam)"
+									class="btn btn-outline-secondary" type="button">Agregar
+									Equipo</button>
+							</div>
+						</div>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+		<hr />
+		<button ng-click="ctrl.listPLayers()">GetPlayers</button>
+		<table class="table table-striped table-primary">
+			<thead>
+				<tr>
+					<th>Name</th>
+					<th>Num</th>
+					<th>Position</th>
+					<th>Team</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr ng-repeat="player in ctrl.players">
+					<td>{{player.name}}</td>
+					<td>{{player.num}}</td>
+					<td>{{player.position}}</td>
+					<td>{{player.team.name}}</td>
+				</tr>
+				<tr>
+					<td><input type="text" class="form-control"
+						ng-model="ctrl.newPlayer.name" placeholder="Nombre"></td>
+					<td><input type="number" class="form-control"
+						ng-model="ctrl.newPlayer.num" placeholder="Number"></td>
+					<td><input type="text" class="form-control"
+						ng-model="ctrl.newPlayer.position" placeholder="Position"></td>
+					<td>
+						<!-- 					documentacion de ng-options en https://docs.angularjs.org/api/ng/directive/ngOptions -->
+						<div class="input-group">
+
+							<select class="form-control"
+								ng-options="team.id as team.name for team in ctrl.teams track by team.id"
+								ng-model="ctrl.newPlayer.team.id"></select>
+
+							<div class="input-group-append">
+								<button class="btn btn-outline-secondary" type="button"
+									ng-click="ctrl.addPlayer(ctrl.newPlayer)">Agregar Jugador</button>
+							</div>
+						</div>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+
+</body>
+</html>
